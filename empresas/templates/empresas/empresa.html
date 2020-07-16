@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <title>{{empresa.nombre}}</title>
+</head>
+<body>
+    <h1>{{empresa.nombre}}</h1>
+    
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+   
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Fecha</th>
+            <th>Apertura</th>
+            <th>Máximo</th>
+            <th>Mínimo</th>
+            <th>Cierre</th>
+            <th>Volumen</th>
+        </tr>
+        {% for precio_empresa in precios_empresa %}
+        <tr>
+            <td>{{precio_empresa.id}}</td>
+            <td>{{precio_empresa.fecha}}</td>
+            <td>{{precio_empresa.precio_apertura}}</td>
+            <td>{{precio_empresa.precio_maximo}}</td>
+            <td>{{precio_empresa.precio_minimo}}</td>
+            <td>{{precio_empresa.precio_cierre}}</td>
+            <td>{{precio_empresa.volumen}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+<!--script src="{% static 'js/index.js' %}"></script>-->
+
+<script type="text/javascript">
+    $.get('{% url "line_chart_json" %}', function(data) {
+        var ctx = $("#myChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line', data: data
+            
+        });
+    });
+</script>
+
+</html>
