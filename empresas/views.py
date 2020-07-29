@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse, get_object_or_404
 from .models import Sector,PrecioEmpresa,Empresa
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -28,7 +29,7 @@ class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels for the x-axis."""
         #return ("January", "February", "March", "April", "May", "June", "July")
-        empresa = Empresa.objects.get(pk=1)
+        empresa = Empresa.objects.get(pk=3)
         precios_empresa = empresa.precioempresa_set.all()
 
         fechas = []
@@ -44,7 +45,7 @@ class LineChartJSONView(BaseLineChartView):
 
     def get_data(self):
         
-        empresa = Empresa.objects.get(pk=1)
+        empresa = Empresa.objects.get(pk=3)
         precios_empresa = empresa.precioempresa_set.all()
 
         precioCierre = []
@@ -60,3 +61,27 @@ class LineChartJSONView(BaseLineChartView):
 
 line_chart = TemplateView.as_view(template_name='line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
+
+def line_chart_json2(request,id):
+    labels = []
+    data = []
+
+    #queryset = City.objects.values('country__name').annotate(country_population=Sum('population')).order_by('-country_population')
+
+    empresa = Empresa.objects.get(pk=id)
+    precios_empresa = empresa.precioempresa_set.all()
+
+    for precio_empresa in precios_empresa:
+        labels.append(precio_empresa.fecha)
+        data.append(precio_empresa.precio_cierre)
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'datasets': [{'data':data,
+        "backgroundColor": "rgba(202, 201, 197, 0.5)", 
+        "borderColor": "rgba(202, 201, 197, 1)", 
+        "pointBackgroundColor": "rgba(202, 201, 197, 1)", 
+        "pointBorderColor": "#fff", 
+        "label": "Central", 
+        "name": "Central"}],
+    })

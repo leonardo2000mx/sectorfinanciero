@@ -47,10 +47,10 @@
 <!--script src="{% static 'js/index.js' %}"></script>-->
 
 <script type="text/javascript">
-    $.get('{% url "line_chart_json" %}', function(data) {
+    $.get('{% url "line_chart_json" empresa.id %}', function(data) {
         var ctx = $("#myChart").get(0).getContext("2d");
         new Chart(ctx, {
-            type: 'line', data: data
+            type: 'line', data: data, id: {{empresa.id}}
             
         });
     });

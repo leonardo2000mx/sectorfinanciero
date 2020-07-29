@@ -22,6 +22,6 @@ urlpatterns = [
     path('sector/<int:id>', views.sector, name='sector'),
     path('empresa/<int:id>', views.empresa, name='empresa'),
     path('chart/<int:id>', views.line_chart, name='line_chart'),
-    path('chartJSON', views.line_chart_json, name='line_chart_json'),
+    path('chartJSON/<int:id>', views.line_chart_json2, name='line_chart_json'),
     path('', views.index, name='index'),
 ]
