@@ -1,14 +1,21 @@
 from django.shortcuts import render,HttpResponse, get_object_or_404
-from .models import Sector,PrecioEmpresa,Empresa
+from .models import Sector,PrecioEmpresa,Empresa, PrecioSector
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from django.http import JsonResponse
+from rest_framework import viewsets
+from .serializers import SectorSerializer, EmpresaSerializer, PrecioempresaSerializer, PreciosectorSerializer
 
 # Create your views here.
 
 def index(request):
-    #sector = Sector.objects.all()
-    return render (request,"empresas/index.html",{"sectores":Sector.objects.all()})
+    
+    return render (request,"empresas/index.html")
+
+def sectores(request):
+    Sectores = Sector.objects.all()
+    context = {'Sectores': Sectores }
+    return render (request,"empresas/sectores.html",context)
 
 def sector(request,id):
     sector = get_object_or_404(Sector, pk=id)
@@ -17,6 +24,13 @@ def sector(request,id):
 def precio_empresas(request,id):
     precio_empresa = get_object_or_404(PrecioEmpresa, pk=id)
     return render (request,"empresas/precio_empresas.html",{"precio_empresa":precio_empresa})
+
+def empresas(request):
+    empresas = Empresa.objects.all()
+    # precios_empresa = empresa.precioempresa_set.all()
+    return render(request,"empresas/empresas.html",{"empresas":empresas})
+
+
 
 def empresa(request,id):
     empresa = Empresa.objects.get(pk=id)
@@ -85,3 +99,53 @@ def line_chart_json2(request,id):
         "label": "Central", 
         "name": "Central"}],
     })
+
+
+
+class SectorViewSet(viewsets.ModelViewSet):
+    """
+    API que permite realizar operaciones con la tabla sector 
+    """
+    # Se define el conjunto de datos sobre el que va a operar la vita,
+    # en este caso, sobre todos los usuarios disponibles.
+    queryset = Sector.objects.all().order_by('id')
+
+    # Se define el serializador encargado de transformar las peticiones
+    # de json a objetos django y viceversa.
+    serializer_class = SectorSerializer
+
+class EmpresaViewSet(viewsets.ModelViewSet):
+    """
+    API que permite realizar operaciones con la tabla sector 
+    """
+    # Se define el conjunto de datos sobre el que va a operar la vita,
+    # en este caso, sobre todos los usuarios disponibles.
+    queryset = Empresa.objects.all().order_by('id')
+
+    # Se define el serializador encargado de transformar las peticiones
+    # de json a objetos django y viceversa.
+    serializer_class = EmpresaSerializer
+
+class PrecioempresaViewSet(viewsets.ModelViewSet):
+    """
+    API que permite realizar operaciones con la tabla sector 
+    """
+    # Se define el conjunto de datos sobre el que va a operar la vita,
+    # en este caso, sobre todos los usuarios disponibles.
+    queryset = PrecioEmpresa.objects.all()
+
+    # Se define el serializador encargado de transformar las peticiones
+    # de json a objetos django y viceversa.
+    serializer_class = PrecioempresaSerializer
+
+class PreciosectorViewSet(viewsets.ModelViewSet):
+    """
+    API que permite realizar operaciones con la tabla sector 
+    """
+    # Se define el conjunto de datos sobre el que va a operar la vita,
+    # en este caso, sobre todos los usuarios disponibles.
+    queryset = PrecioSector.objects.all()
+
+    # Se define el serializador encargado de transformar las peticiones
+    # de json a objetos django y viceversa.
+    serializer_class = PreciosectorSerializer
