@@ -1,0 +1,26 @@
+{% extends "empresas/base.html" %}
+{% block header %}
+
+    <h1>Listado de las empresas mas importantes de México </h1>
+
+{% endblock header %}
+
+
+{% block content %}
+<ul>
+    {% for empresa in empresas %}
+        <li>
+            <a href="{% url 'empresas:empresa' empresa.id %}">{{ empresa }}</a>
+        </li>
+    {% empty %}
+        <li>no se han agregado empresas</li>
+    {% endfor %}
+</ul>
+
+
+
+    <h2>
+  esta pagina se podran  seleccionar las distitnas empresas 
+  y los distintos sectores 
+    </h2>
+{% endblock content %}
