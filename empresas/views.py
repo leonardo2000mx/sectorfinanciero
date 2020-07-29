@@ -5,6 +5,7 @@ from chartjs.views.lines import BaseLineChartView
 from django.http import JsonResponse
 from rest_framework import viewsets
 from .serializers import SectorSerializer, EmpresaSerializer, PrecioempresaSerializer, PreciosectorSerializer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -26,7 +27,26 @@ def precio_empresas(request,id):
     return render (request,"empresas/precio_empresas.html",{"precio_empresa":precio_empresa})
 
 def empresas(request):
+    queryset = request.GET.get("buscar")
     empresas = Empresa.objects.all()
+    if queryset:
+        empresas = Empresa.objects.filter(
+            nombre__icontains=queryset
+        )
+    paginator = Paginator(empresas, 10)
+    page = request.GET.get('page')
+    
+    
+    try:
+        empresas = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        empresas = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        empresas= paginator.page(paginator.num_pages)
+ 
+ 
     # precios_empresa = empresa.precioempresa_set.all()
     return render(request,"empresas/empresas.html",{"empresas":empresas})
 
