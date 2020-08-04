@@ -25,10 +25,11 @@ SECRET_KEY = '*x4@&whj!ho%n%_)ad$ozumen$q$qk3*@7xc60amc2r1yc5a0&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sectorfinancieromx.pythonanywhere.com']
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'empresas',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,7 @@ WSGI_APPLICATION = 'sectorFinanciero.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -82,7 +85,6 @@ DATABASES = {
         'HOST':'sectorFinancieroMx.mysql.pythonanywhere-services.com'
     }
 }
-
 
 
 # Password validation
@@ -124,3 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+
