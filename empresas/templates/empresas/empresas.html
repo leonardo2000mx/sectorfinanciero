@@ -1,0 +1,71 @@
+{% extends "empresas/base.html" %}
+{% block header %}
+
+    <h1>Listado de las empresas mas importantes de México </h1>
+
+{% endblock header %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 search">
+        <form method="get">
+          <div id="custom-search-input">
+            <div class="input-group col-md-12">
+              <input type="text" class="form-control" placeholder="Buscar..." name="buscar" value="{{request.GET.buscar}}" >
+              <span class="input-group-list">
+                <i class="icon icon-search"></i>
+                <button type="submit" class="boton btn-success">Buscar</button>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<ul>
+    {% for empresa in empresas %}
+        <li>
+            <a href="{% url 'empresas:empresa' empresa.id %}">{{ empresa }}</a>
+        </li>
+    {% empty %}
+        <li>no se han agregado empresas</li>
+    {% endfor %}
+</ul>
+
+
+<div class="container h-100">
+<div class="row justify-content-center h-100">
+{% if empresas.has_next or empresas.has_previous %}
+
+    <ul class="pagination">
+        {% if empresas.has_previous %}
+            <li><a href="?page={{ empresas.previous_page_number }}" class="btn btnpages"><i
+                    class="glyphicon glyphicon-chevron-left"></i></a></li>
+        {% endif %}
+        {% for page in empresas.paginator.page_range %}
+            <li class="{% if empresas.number == page %}active{% endif %}">
+                <a class="btn btnpages" href="?page={{ page }}">{{ page }}</a></li>
+        {% endfor %}
+
+        {% if empresas.has_next %}
+            <li>
+                <a href="?page={{ empresas.next_page_number }}" class="btn btnpages">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+
+
+{% endif %}
+
+</div>
+<div>
+
+
+{% endblock content %}

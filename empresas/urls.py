@@ -19,7 +19,9 @@ from . import views
 
 urlpatterns = [
     path('precio_empresas/<int:id>', views.precio_empresas, name='precio_empresas'),
+    path('sectores', views.sectores, name='sectores'),   
     path('sector/<int:id>', views.sector, name='sector'),
+    path('empresas', views.empresas, name='empresas'),
     path('empresa/<int:id>', views.empresa, name='empresa'),
     path('chart/<int:id>', views.line_chart, name='line_chart'),
     path('chartJSON/<int:id>', views.line_chart_json2, name='line_chart_json'),
