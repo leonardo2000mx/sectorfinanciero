@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Principal</title>
-</head>
-<body>
-    <h1>Prueba</h1>
-    <ul>
-        {% for sector in sectores %}
-        <li>
-            {{sector.id}}  {{sector.nombre}}  {{sector.ticker}}
-        </li>
-        {% endfor %}
-    </ul>
+{% extends "empresas/base.html" %}
+{% block header %}
 
-    
-    
-</body>
-</html>
+    <h1>Esta pagina ser la pagina inicial </h1>
+
+{% endblock header %}
+
+
+{% block content %}
+
+
+
+    <h2>
+  esta pagina se podran  seleccionar las distitnas empresas 
+  y los distintos sectores 
+    </h2>
+{% endblock content %}

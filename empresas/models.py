@@ -22,7 +22,7 @@ class Empresa(models.Model):
         return f"{self.nombre}, {self.ticker}"
 
 class PrecioEmpresa(models.Model):
-    id_empresa = models.ForeignKey(Empresa,on_delete= models.CASCADE)
+    id_empresa = models.ForeignKey(Empresa,on_delete= models.CASCADE,related_name='emp')
     nombre_empresa = models.CharField(max_length=50)
     fecha = models.DateField()
     precio_apertura = models.FloatField()
