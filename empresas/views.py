@@ -10,8 +10,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def index(request):
-    
-    return render (request,"empresas/index.html")
+    Sectores = Sector.objects.all()
+    context = {'Sectores': Sectores } 
+    return render (request,"empresas/index.html",context)
 
 def sectores(request):
     Sectores = Sector.objects.all()

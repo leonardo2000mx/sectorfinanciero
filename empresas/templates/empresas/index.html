@@ -10,8 +10,25 @@
 
 
 
-    <h2>
-  esta pagina se podran  seleccionar las distitnas empresas 
-  y los distintos sectores 
-    </h2>
+<!--Contenedor principal-->
+<div class="d-flex bd-highlight mb-3" >
+  <div class="p-2 bd-highlight" style=" width: 30%; margin: 10%;">
+      <ul class="navbar-nav">
+       
+        
+          {% for sector in Sectores %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'empresas:sector' sector.id %}">{{ sector }} <span class="sr-only">(current)</span></a>
+              
+              </li>
+          {% empty %}
+              <li>no se han agregado sectores</li>
+          {% endfor %}
+     
+
+
+          
+        </ul>
+  </div>
+</div>
 {% endblock content %}
