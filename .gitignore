@@ -5,3 +5,5 @@ __pycache__/
 db.sqlite3
 settings.py
 empresas.json
+.idea
+.vscode
