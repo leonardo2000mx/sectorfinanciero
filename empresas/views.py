@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse, get_object_or_404
+from django.shortcuts import render,HttpResponse, get_object_or_404,redirect
 from .models import Sector,PrecioEmpresa,Empresa, PrecioSector
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
@@ -6,27 +6,37 @@ from django.http import JsonResponse
 from rest_framework import viewsets
 from .serializers import SectorSerializer, EmpresaSerializer, PrecioempresaSerializer, PreciosectorSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .forms import CreateUserForm
 
 # Create your views here.
 
+@login_required(login_url='acceso/')
 def index(request):
     Sectores = Sector.objects.all()
     context = {'Sectores': Sectores }
     return render (request,"empresas/index.html",context)
 
+@login_required(login_url='acceso/')
 def sectores(request):
     Sectores = Sector.objects.all()
     context = {'Sectores': Sectores }
     return render (request,"empresas/sectores.html",context)
 
+@login_required(login_url='acceso/')
 def sector(request,id):
     sector = get_object_or_404(Sector, pk=id)
     return render (request,"empresas/sector.html",{"sector":sector})
 
+@login_required(login_url='acceso/')
 def precio_empresas(request,id):
     precio_empresa = get_object_or_404(PrecioEmpresa, pk=id)
     return render (request,"empresas/precio_empresas.html",{"precio_empresa":precio_empresa})
 
+@login_required(login_url='acceso/')
 def empresas(request):
     queryset = request.GET.get("buscar")
     empresas = Empresa.objects.all()
@@ -52,11 +62,57 @@ def empresas(request):
     return render(request,"empresas/empresas.html",{"empresas":empresas})
 
 
-
+@login_required(login_url='acceso/')
 def empresa(request,id):
     empresa = Empresa.objects.get(pk=id)
     precios_empresa = empresa.emp.all()
     return render(request,"empresas/empresa.html",{"precios_empresa":precios_empresa,"empresa":empresa})
+
+def registro(request):
+    if request.user.is_authenticated:
+        return redirect('index/')
+    
+    else: 
+        form = CreateUserForm()
+
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if form.is_valid():
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'La cuenta se ha registrado' + user)
+
+                return redirect('registro')
+
+        context = {
+            'form':form
+        }
+        return render(request,'empresas/registro.html',context)
+
+def acceso(request):
+
+    if request.user.is_authenticated:
+        return redirect('/')
+
+    else: 
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username,password=password)
+
+            if user is not None:
+                login(request,user)
+                return redirect('/') 
+
+            else:
+                messages.info(request,'Username OR password is incorrect')
+                
+        return render(request,'empresas/acceso.html')
+
+def salidaUsuario(request):
+    logout(request)
+    return render(request,'empresas/acceso.html')
 
 
 class LineChartJSONView(BaseLineChartView):
@@ -170,3 +226,5 @@ class PreciosectorViewSet(viewsets.ModelViewSet):
     # Se define el serializador encargado de transformar las peticiones
     # de json a objetos django y viceversa.
     serializer_class = PreciosectorSerializer
+
+

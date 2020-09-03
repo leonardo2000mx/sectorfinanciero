@@ -25,5 +25,8 @@ urlpatterns = [
     path('empresa/<int:id>', views.empresa, name='empresa'),
     path('chart/<int:id>', views.line_chart, name='line_chart'),
     path('chartJSON/<int:id>', views.line_chart_json2, name='line_chart_json'),
+    path('registro/', views.registro, name='registro'),
+    path('acceso/', views.acceso, name='acceso'),
+    path('salida/', views.salidaUsuario, name='salida'),
     path('', views.index, name='index'),
 ]

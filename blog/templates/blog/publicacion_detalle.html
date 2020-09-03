@@ -1,0 +1,13 @@
+{% extends "empresas/base.html" %}
+{% block titulo %}Publicacion Detalle{% endblock titulo %}</title>
+
+{% block content %}
+    <br><br>
+    {{ publicar.titulo }} - 
+    <br><a href="{% url 'eliminar_publicacion' publicar.pk %}">Eliminar Publicacion</a>
+    ----<a href="{% url 'modificar_publicacion' publicar.pk %}">Editar Publicación</a><br>
+    {{ publicar.autor }}<br>
+    {{ publicar.cuerpo }} <br><br>
+    <a href="{% url 'publicar' %}" class='btn btn-dark'> Regresar </a>
+{% endblock %}
+
