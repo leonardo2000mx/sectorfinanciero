@@ -26,6 +26,9 @@ router.register(r'preciosector', views.PreciosectorViewSet)
 
 urlpatterns = [
     path('', include(('empresas.urls','empresas'), namespace='empresas')),
+    path('blog/', include('blog.urls')),
+    path('registration/', include('django.contrib.auth.urls')),
+    path('registration/', include('registration.urls')),
     path('admin/', admin.site.urls),
         # Rutas para la url /api/
     path('api/', include(router.urls)),

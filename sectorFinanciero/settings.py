@@ -25,7 +25,7 @@ SECRET_KEY = '*x4@&whj!ho%n%_)ad$ozumen$q$qk3*@7xc60amc2r1yc5a0&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sectorfinancieromx.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'empresas',
-    'rest_framework',
+    'blog',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -77,11 +78,8 @@ WSGI_APPLICATION = 'sectorFinanciero.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sectorFinanciero$seriesFinancieras',
-        'USER': 'sectorFinanciero',
-        'PASSWORD':'hola1234',
-        'HOST':'sectorFinancieroMx.mysql.pythonanywhere-services.com'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -123,7 +121,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-

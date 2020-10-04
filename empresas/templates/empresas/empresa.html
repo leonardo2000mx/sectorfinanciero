@@ -40,16 +40,35 @@
     </table>
     
 
-
-
-
-<script type="text/javascript">
-    $.get('{% url "empresas:line_chart_json" empresa.id %}', function(data) {
-        var ctx = $("#myChart").get(0).getContext("2d");
-        new Chart(ctx, {
-            type: 'line', data: data, id: {{empresa.id}}
-            
-        });
-    });
-</script>
+<!--
+    <div class="p-2 bd-highlight " style=" width: 60%; margin-top: 10%;scroll-margin-right: 10%;margin-bottom: 10%;">
+        <div class="d-flex bd-highlight ">
+          <div class="p-2 bd-highlight "><canvas id="myChart" width=380px height="240px" ></canvas></div>
+          <div class="p-2 bd-highlight"><img src="IPC.JPG" alt="" class="img-thumbnail"></div>
+        </div>
+-->
+<div class="p-2 bd-highlight " style=" width: 60%; margin-top: 10%;scroll-margin-right: 10%;margin-bottom: 10%;">
+    <div class="d-flex bd-highlight ">
+        <div class="p-2 bd-highlight "></div>
+            <script type="text/javascript">
+                $.get('{% url "empresas:line_chart_json" empresa.id %}', function(data) {
+                    var ctx = $("#myChart").get(0).getContext("2d");
+                    new Chart(ctx, {
+                        type: 'line', data: data, id: {{empresa.id}}
+                        
+                    });
+                });
+            </script>
+        <div class="p-2 bd-highlight "></div>
+        <script type="text/javascript">
+            $.get('{% url "empresas:line_chart_json3" empresa.id %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'line', data: data, id: {{empresa.id}}
+                    
+                });
+            });
+        </script>
+        </div>
+</div>
 {% endblock content %}

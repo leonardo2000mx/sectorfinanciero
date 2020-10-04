@@ -1,0 +1,22 @@
+{% extends "empresas/base.html" %}
+
+{% block titulo %}Blog Sector Financiero{% endblock titulo %}</title>
+
+{% block content %}
+<br>
+<br>
+{% for publicar in object_list %}
+    <ul>
+        <li>
+            {% if user.id == publicar.autor.id %}
+            <p><a href="{% url 'publicacion_detalle' publicar.pk %}">{{publicar.titulo}}</a> <br>
+                Escrito por {{publicar.autor}}<br> 
+                <a href="{% url 'categoria' publicar.category|slugify %}">{{ publicar.category }}</a><br> 
+            {% endif %}    
+            {{publicar.cuerpo}}</p>
+            
+        </li>
+    </ul>
+{% endfor%}
+
+{% endblock %}

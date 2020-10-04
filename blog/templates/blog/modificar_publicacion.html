@@ -1,0 +1,20 @@
+{% extends "empresas/base.html" %}
+
+{% block title %} Editar Publicación  {% endblock %}
+
+{% block content %}
+	{% if user.id == publicar.autor.id %}
+		<br><br>
+		<div class="form-group">
+			<form method="POST">{% csrf_token %}
+				{{ form.as_p }}
+				<button class="btn btn-secondary">Publicar</button>
+		</div>
+	{% else %}
+    	Se necesita registrar
+    {% endif %}
+
+	
+	
+
+{% endblock %}
