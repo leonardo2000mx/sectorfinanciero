@@ -1,0 +1,27 @@
+{% extends 'empresas/base.html' %}
+
+{% block content%}
+
+{% if category_posts %}
+
+    <h1>{{ cats }}</h1>
+
+    <ul>
+    {% for post in category_posts %}
+    <li><a href="{% url 'publicacion_detalle' post.pk %}">{{ post.titulo }}</a> - {{ post.autor }}
+                - <a href="">{{ post.category }}</a>
+
+                
+                    <a href="{% url 'modificar_publicacion' post.pk %}">Editar</a>
+                    <br>
+
+                    <a href="{% url 'eliminar_publicacion' post.pk %}">Borrar</a>
+
+            {{ post.cuerpo|slice:"200"|safe }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <h2>Esta página no existe</h2>
+{% endif %}
+
+{% endblock %}

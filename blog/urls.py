@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path, include
-from .views import PublicarListView,PublicarDetailView,PublicarCreateView,PublicarDeleteView,ModificarPublicacionUpdateView
+from .views import PublicarListView,PublicarDetailView,PublicarCreateView,PublicarDeleteView,ModificarPublicacionUpdateView,CategoryView,CategoryListView,AddCategoryView
 
 
 urlpatterns = [
@@ -24,4 +24,7 @@ urlpatterns = [
     path('agregar_publicacion', PublicarCreateView.as_view(), name='agregar_publicacion'),
     path('modificar_publicacion/<int:pk>', ModificarPublicacionUpdateView.as_view(), name='modificar_publicacion'),
     path('publicacion_detalle/<int:pk>/eliminar', PublicarDeleteView.as_view(), name='eliminar_publicacion'),
+    path('categoria/<str:cats>/',CategoryView, name='categoria'),
+    path('category-list/',CategoryListView, name='category-list'),
+    path('agregar_categoria/', AddCategoryView.as_view(), name='agregar_categoria'),
 ]

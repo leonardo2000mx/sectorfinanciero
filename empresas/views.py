@@ -130,9 +130,9 @@ class LineChartJSONView(BaseLineChartView):
         return fechas
 
 
-    def get_providers(self):
-        """Return names of datasets."""
-        return ["Central"]
+    #def get_providers(self):
+     #   """Return names of datasets."""
+      #  return ["Central"]
 
     def get_data(self):
 
@@ -175,6 +175,33 @@ def line_chart_json2(request,id):
         "pointBorderColor": "#fff",
         "label": "Central",
         "name": "Central"}],
+    })
+
+line_chart3 = TemplateView.as_view(template_name='line_chart3.html')
+line_chart_json3 = LineChartJSONView.as_view()
+
+def line_chart_json3(request,id):
+    labels = []
+    data = []
+
+    #queryset = City.objects.values('country__name').annotate(country_population=Sum('population')).order_by('-country_population')
+
+    empresa = Empresa.objects.get(pk=id)
+    precios_empresa = empresa.emp.all()
+
+    for precio_empresa in precios_empresa:
+        labels.append(precio_empresa.fecha)
+        data.append(precio_empresa.precio_cierre)
+
+    return JsonResponse(data={
+        'labels': labels,
+        'datasets': [{'data':data,
+        "backgroundColor": "rgba(202, 201, 197, 0.5)",
+        "borderColor": "rgba(202, 201, 197, 1)",
+        "pointBackgroundColor": "rgba(202, 201, 197, 1)",
+        "pointBorderColor": "#fff",
+        "label": "",
+        "name": ""}],
     })
 
 

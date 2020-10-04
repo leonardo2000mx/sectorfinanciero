@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'empresas',
     'rest_framework',
     'blog',
+    'registration'
 ]
 
 MIDDLEWARE = [
