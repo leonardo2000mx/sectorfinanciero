@@ -130,9 +130,9 @@ class LineChartJSONView(BaseLineChartView):
         return fechas
 
 
-    #def get_providers(self):
-     #   """Return names of datasets."""
-      #  return ["Central"]
+    def get_providers(self):
+        """Return names of datasets."""
+        return ["Central"]
 
     def get_data(self):
 
@@ -200,8 +200,8 @@ def line_chart_json3(request,id):
         "borderColor": "rgba(202, 201, 197, 1)",
         "pointBackgroundColor": "rgba(202, 201, 197, 1)",
         "pointBorderColor": "#fff",
-        "label": "",
-        "name": ""}],
+        "label": "Central",
+        "name": "Central"}],
     })
 
 

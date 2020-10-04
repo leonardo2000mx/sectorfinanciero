@@ -5,9 +5,10 @@ __pycache__/
 db.sqlite3
 settings.py
 empresas.json
+
+# Editors
 .vscode/
 .idea/
-
 # Environments
 .env
 .venv
